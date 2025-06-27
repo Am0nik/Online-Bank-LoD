@@ -21,6 +21,19 @@
                 <h1>Наш слоган:</h1>
                 <p><i>LoD Bank — современный цифровой банк для умных решений</i></p>
             </div>
+            <div style="width: 80%;margin-left: auto;margin-right: auto;margin-top: 50px;font-weight: 500;">
+                <p>Банк LoD Bank был основан в 2010 году с целью создать надёжную финансовую платформу нового поколения. С первых дней своего существования мы делали упор на безопасность, технологичность и удобство для клиентов.
+                В 2012 году мы первыми в регионе внедрили онлайн-банкинг с полным спектром услуг, включая переводы, оплату услуг и открытие вкладов. В 2015 году наш мобильный банк получил признание за лучший интерфейс и стабильность работы.
+                С 2018 года LoD Bank активно развивает направления инвестиций, бизнес-банкинга и международных переводов.</p>
+                <br>
+                <p><b>Сегодня LoD Bank — это:</b>
+                    <ul style="padding-left: 15px;font-style: italic;">
+                        <li>более 1 миллиона довольных клиентов,</li>
+                        <li>поддержка 24/7,</li>
+                        <li>и современная цифровая платформа, соответствующая мировым стандартам безопасности.</li>
+                    </ul>Мы продолжаем расти, инвестируя в инновации и заботясь о каждом клиенте.</p>
+            </div>
+            <hr style="margin-top: 50px;margin-bottom: 50px;">
             <div style="display: flex;width: 80%;margin-left: auto;margin-right: auto;margin-top: 50px;">
                 <div style="display: block;text-align: center;width: 50%;margin-top: auto;margin-bottom: auto;">
                     <h2>Безопасные переводы</h2>
@@ -49,21 +62,20 @@
                 <div class="actions">
                     <div class="actions-container">
                     {% for action in actions %}
-                        <a href="#" class="action-link">
-                            <div class="action-card">
-                                <h2 style="text-align: center;">{{ action.name }}</h2>
-                            
-                                {% if action.icon %}
-                                <div style="display: flex; justify-content: center;">
-                                    <img src="{{ action.icon.url }}" alt="{{ action.name }}" style="width: 150px; height: auto;">
-                                </div>
-                                {% endif %}
-                            
-                                <p>{{ action.description }}</p>
-                                <hr style="margin-top: auto;">
-                                <p style="margin-top: auto;"><strong>Акция действует до:</strong> {{ action.active_to }}</p>
+                        <a href="{{ action.get_absolute_url }}" class="action-card" style="color: inherit;text-decoration: none;">
+                            <h2 style="text-align: center;">{{ action.name }}</h2>
+
+                            {% if action.icon %}
+                            <div style="display: flex; justify-content: center;">
+                                <img src="{{ action.icon.url }}" alt="{{ action.name }}" style="width: 150px; height: auto;">
                             </div>
+                            {% endif %}
+                        
+                            <p>{{ action.description }}</p>
+                            <hr style="margin-top: auto;">
+                            <p style="margin-top: auto;"><strong>Акция действует до:</strong> {{ action.active_to }}</p>
                         </a>
+
 
                     {% endfor %}
                     </div>
@@ -74,7 +86,19 @@
 
         </main>
         <footer>
-            <p>©2025 Банк LoD</p>
+            <div style="display: flex;margin-top: 10px;">
+                <div style="display: block;text-align: left;margin-left: 20px;">
+                    <p><b>Номер телефона:</b> +1 (234) 567-890</a><br>
+                    <p><b>Электронная почта:</b> lod_bank@gmail.com</p>
+                    <p><b>Адрес:</b> США, штат Иллинойс, город Уиннетка, Линкльн авеню 671</p>
+                </div>
+                <div style="display: block;margin-left: auto;margin-right: 20px;margin-top: auto;">
+                    <a href="https://www.instagram.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.facebook.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.twitter.com/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Qou1wYrqJT04IXk2H3pjT2yYBIMBZ5t8sQ&s" style="width: 30px;height: auto;border-radius: 5px;"></a>
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><b>©2025 Банк LoD</b></p>
         </footer>
 
         <script>

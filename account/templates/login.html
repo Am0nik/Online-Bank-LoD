@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Банк LoD</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <header class="header-home">
+            <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="100" height="100">
+            <a href="{% url 'home' %}">LoD</a>
+            <div class="header-home-more">
+                <a href="{% url 'login' %}">Аккаунт</a>
+                <a href="{% url 'info' %}">Инфо</a>
+            </div>
+        </header>
+        <main>
+            <div class="login-content">
+                <h1 style="text-align: center;">Добро пожаловать в Банк LoD</h1>
+                <hr style="margin-top:20px;margin-bottom: 20px;">
+                <p style="text-align: center;margin-bottom: 20px;">Пожалуйста, войдите в свой аккаунт, чтобы продолжить.</p>
+                <form method="post" action="{% url 'login' %}" style="display: flex; flex-direction: column">
+                    {% csrf_token %}
+                        <div style="width: 50%;display: flex; flex-direction: column;margin-left: auto;margin-right: auto;">
+                            {{ form.user }}
+                            <br>
+                            {{ form.surname }}
+                            <br>
+                            {{ form.password }}
+                        </div>
+                    <div style="width: 50%;display: flex; flex-direction: column;margin-left: auto;margin-right: auto;">
+                        {% if form.non_field_errors %}
+                            <div class="error-message" style="color: red; text-align: center;">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <div class="error-message" style="color: red; text-align: center;">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        {% endfor %} 
+                    </div>
+                    <br>
+                    <button type="submit" class="button-lr">Войти</button>
+                </form>
+                <p style="margin-top: 10px;">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь здесь</a>.</p>
+            </div>
+        </main>
+        <footer style="margin-bottom: 0;">
+            <div style="display: flex;margin-top: 10px;">
+                <div style="display: block;text-align: left;margin-left: 20px;">
+                    <p><b>Номер телефона:</b> +1 (234) 567-890</a><br>
+                    <p><b>Электронная почта:</b> lod_bank@gmail.com</p>
+                    <p><b>Адрес:</b> США, штат Иллинойс, город Уиннетка, Линкльн авеню 671</p>
+                </div>
+                <div style="display: block;margin-left: auto;margin-right: 20px;margin-top: auto;">
+                    <a href="https://www.instagram.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.facebook.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.twitter.com/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Qou1wYrqJT04IXk2H3pjT2yYBIMBZ5t8sQ&s" style="width: 30px;height: auto;border-radius: 5px;"></a>
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><b>©2025 Банк LoD</b></p>
+        </footer>
+
+        <script>
+            function adjustMainPadding() {
+              const header = document.querySelector('header');
+              const main = document.querySelector('main');
+              const height = header.offsetHeight;
+              main.style.paddingTop = height + 'px';
+            }
+        
+            window.addEventListener('load', adjustMainPadding);
+            window.addEventListener('resize', adjustMainPadding);
+          </script>
+    </body>
+</html>
