@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Банк LoD</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <header class="header-home">
+            <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="100" height="100">
+            <a href="{% url 'home' %}">LoD</a>
+            <div class="header-home-more">
+                <a href="{% url 'login' %}">Аккаунт</a>
+                <a href="{% url 'info' %}">Инфо</a>
+            </div>
+        </header>
+        <main>
+            <div style="text-align: center;margin-top: 5px;margin-bottom: 15px;">
+                <h1>Наш слоган:</h1>
+                <p><i>LoD Bank — современный цифровой банк для умных решений</i></p>
+            </div>
+            <div style="display: flex;width: 80%;margin-left: auto;margin-right: auto;margin-top: 50px;">
+                <div style="display: block;text-align: center;width: 50%;margin-top: auto;margin-bottom: auto;">
+                    <h2>Безопасные переводы</h2>
+                    <p style="text-align: left;">Ваши средства под надёжной защитой. 
+                        Мы используем современные технологии шифрования и двухфакторную аутентификацию, чтобы каждый перевод был защищён 
+                        от несанкционированного доступа. Все операции проходят проверку в режиме <b>реального времени</b>, чтобы обеспечить 
+                        максимальную безопасность ваших транзакций.</p>
+                </div>
+                <img src="{% static 'media/safe_first.png' %}" alt="Переводы" width="200" height="200" style="margin-left: auto;">
+            </div>
+
+            <div style="display: flex;width: 80%;margin-left: auto;margin-right: auto;margin-top: 50px;">
+                <img src="{% static 'media/service24-7.png' %}" alt="Поддержка" width="200" height="200" style="margin-right: auto;">
+                <div style="display: block;text-align: center;width: 50%;margin-top: auto;margin-bottom: auto;">
+                    <h2>Поддержка 24/7</h2>
+                    <p style="text-align: left;">Наша команда <b>всегда</b> на связи — в любое время дня и ночи. 
+                        Если у вас возникли вопросы или проблемы, вы можете обратиться к нам через чат, 
+                        электронную почту или по телефону. Мы гарантируем оперативную и профессиональную помощь 
+                        в любом вопросе, связанном с вашими финансами.</p>
+                </div>
+            </div>
+            
+            <hr style="margin-top: 50px;margin-bottom: 50px;">
+            <div>
+                <h1 style="text-align: center;">Акции:</h1>
+                <div class="actions">
+                    <div class="actions-container">
+                    {% for action in actions %}
+                        <a href="#" class="action-link">
+                            <div class="action-card">
+                                <h2 style="text-align: center;">{{ action.name }}</h2>
+                            
+                                {% if action.icon %}
+                                <div style="display: flex; justify-content: center;">
+                                    <img src="{{ action.icon.url }}" alt="{{ action.name }}" style="width: 150px; height: auto;">
+                                </div>
+                                {% endif %}
+                            
+                                <p>{{ action.description }}</p>
+                                <hr style="margin-top: auto;">
+                                <p style="margin-top: auto;"><strong>Акция действует до:</strong> {{ action.active_to }}</p>
+                            </div>
+                        </a>
+
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+
+        </main>
+        <footer>
+            <p>©2025 Банк LoD</p>
+        </footer>
+
+        <script>
+            function adjustMainPadding() {
+              const header = document.querySelector('header');
+              const main = document.querySelector('main');
+              const height = header.offsetHeight;
+              main.style.paddingTop = height + 'px';
+            }
+        
+            window.addEventListener('load', adjustMainPadding);
+            window.addEventListener('resize', adjustMainPadding);
+          </script>
+    </body>
+</html>
