@@ -1,26 +1,39 @@
 from django import forms
 from .models import CustomUser
+import re
 
 class CustomUserCreationForm(forms.ModelForm):
+
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль', 'class': 'custom-input'})
+    )
+
     class Meta:
         model = CustomUser
         fields = [
             'user', 'surname', 'phone_number', 'email',
             'account_type', 'balance', 'profile_picture'
         ]
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['user'].label = "Имя"
+        self.fields['user'].widget.attrs.update({'placeholder': 'Введите имя', 'class': 'custom-input'})
+
         self.fields['surname'].label = "Фамилия"
+        self.fields['surname'].widget.attrs.update({'placeholder': 'Введите фамилию', 'class': 'custom-input'})
+
         self.fields['phone_number'].label = "Номер телефона"
+        self.fields['phone_number'].widget.attrs.update({'placeholder': 'Введите номер телефона', 'class': 'custom-input'})
+
         self.fields['email'].label = "Электронная почта"
+        self.fields['email'].widget.attrs.update({'placeholder': 'Введите электронную почту', 'class': 'custom-input'})
+
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
+        phone_number = phone_number.replace('+', '')
         if not phone_number.isdigit() or len(phone_number) < 10:
             raise forms.ValidationError("Номер телфона должен содержать только цифры и быть не менее 10 цифр.")
         return phone_number
@@ -33,6 +46,22 @@ class CustomUserCreationForm(forms.ModelForm):
         if qs.exists():
             raise forms.ValidationError("Эта почта уже используется")
         return email
+    
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+
+        if len(password) < 8:
+            raise forms.ValidationError("Пароль должен быть не менее 8 символов.")
+        if not re.search(r"[A-ZА-Я]", password):
+            raise forms.ValidationError("Пароль должен содержать хотя бы одну заглавную букву.")
+        if not re.search(r"[a-zа-я]", password):
+            raise forms.ValidationError("Пароль должен содержать хотя бы одну строчную букву.")
+        if not re.search(r"[0-9]", password):
+            raise forms.ValidationError("Пароль должен содержать хотя бы одну цифру.")
+        if not re.search(r"[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]", password):
+            raise forms.ValidationError("Пароль должен содержать хотя бы один специальный символ.")
+
+        return password
 
 from django import forms
 from django.contrib.auth.hashers import check_password

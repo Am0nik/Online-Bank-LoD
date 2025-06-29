@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 # Register your models here.
 
@@ -9,8 +10,8 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_filter = ('account_type',)
     ordering = ('-balance',)
 
+
     def has_add_permission(self, request):
-        return False
+        return True
     def has_delete_permission(self, request, obj=None):
-        return False
-    
+        return True

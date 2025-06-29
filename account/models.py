@@ -11,6 +11,8 @@ def generate_account_number():
             return account_number
 
 
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, user, password=None, **extra_fields):
         if not user:
@@ -39,10 +41,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     account_type = models.CharField(max_length=50, choices=[
         ('client', 'Client'),
         ('moderator', 'Moderator'),
-    ], default='client')
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    ], default='client', blank=True, null=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     password = models.CharField(max_length=128, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    code = models.CharField(max_length=6)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -55,7 +58,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         if not self.account_number:
             self.account_number = generate_account_number()
+        if not self.code:
+            self.code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+
+
         super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f"{self.user} - {self.account_number}"
