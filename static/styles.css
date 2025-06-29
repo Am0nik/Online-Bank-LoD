@@ -37,6 +37,7 @@ header {
     text-align: center;
     font-size: 1.5em;
     width: 100%;
+    z-index: 1000;
 }
 
 .header-home{
@@ -208,43 +209,65 @@ header {
 
 .flip-card {
     background-color: transparent;
+    position: relative;
     width: 500px;
     height: 250px;
-    border: 1px solid #f1f1f1;
     border-radius: 30px;
-    perspective: 1000px; 
+    perspective: 1000px; /* эффект 3D */
 }
 
 .flip-card-inner {
     position: relative;
+    will-change: transform;
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.8s;
+    transition: transform 1.5s;
     transform-style: preserve-3d;
     border-radius: 30px;
+
+    /* 👇 Обязательно: начальное состояние */
+    transform: rotateY(0deg);
 }
 
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
 }
 
-.flip-card-front, .flip-card-back {
+.flip-card-front,
+.flip-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; 
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 30px;
+    border: 1px solid #f1f1f1;
+    overflow: hidden;
 }
 
 .flip-card-front {
-    background-color: #bbb;
-    color: black;
+    background-size: cover;
+    background-position: center;
+    z-index: 2; /* поверх */
 }
 
 .flip-card-back {
-    background-color: dodgerblue;
+    background-color: rgb(74, 148, 208);
     color: white;
     transform: rotateY(180deg);
+    z-index: 1;
+    display: block;
+    flex-direction: column;
+    align-items: center;
+}
+
+.check{
+    background-color: rgb(250, 250, 250);
+    padding: 30px;
+    margin: 10px;
+    border-radius: 10px;
+    color: #003540;
+    font-size: 1.2em;
+    text-align: center;
 }

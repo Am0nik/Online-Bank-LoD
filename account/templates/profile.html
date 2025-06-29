@@ -12,25 +12,50 @@
             <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="50" height="50">
             <a href="{% url 'home' %}" style="font-size: 1.5em;">LoD</a>
             <div class="header-profile-more">
-                <a href="{% url 'profile' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;">Выйти</a>
+                <a href="{% url 'logout' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;">Выйти</a>
             </div>
         </header>
         <main>
-            <div style="display: flex;">
-                <div class="flip-card">
+            <div style="display: flex; justify-content: center; align-items: center; min-height: 300px;">
+                <div style="display: block;margin-right: auto;color: rgb(38, 29, 83);background-color: rgb(183, 195, 255);
+                padding: 50px;margin-left: 20px;border-radius: 20px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div style="text-align: left;">
+                        <h1>Имя: {{ name }}</h1>
+                        <p>Фамилия: {{ surname }}</p>
+                        <p>Тип счета: {{ account_type }}</p>
+                        <p>Номер счета: {{ account_number }}</p>
+                        <p style="font-weight: 600;font-size: 1.5em;">Баланс: {{ balance }}₸</p>
+                    </div>
+                </div>
+                
+                <div class="flip-card" style="margin-left: auto;margin-right: auto;">
                     <div class="flip-card-inner">
-                      <div class="flip-card-front">
-                        <img src="{% static 'media/card-default.png' %}" alt="Avatar" style="width:100%;height:100%;border-radius: 30px;">
-                      </div>
-                      <div class="flip-card-back">
-                        <h1>John Doe</h1>
-                        <p>Architect & Engineer</p>
-                        <p>We love that guy</p>
-                      </div>
+                        <div class="flip-card-front" style="background-image: url('{% static 'media/card-default.png' %}');">
+                            <p style="color: azure; text-align: right; padding: 10px; font-weight: 600;">
+                                {{ account_number }}
+                            </p>
+                        </div>
+                        <div class="flip-card-back">
+                            <div style="width: 500px;height: 30px;background-color: black;padding: 10px;margin-top: 20px;"></div>
+                            <br>
+                            <h1 style="text-align: left;margin-left: 10px;">{{ name }} {{surname}}</h1>
+                            <p style="font-weight: 600;text-align: left;margin-left: 10px;">CVV2: {{ code }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+            <hr style="margin: 20px;">
+            <div style="display: block;width: 95%;margin-left: auto;margin-right: auto;padding: 20px;background-color: rgb(236, 236, 236);border-radius: 20px;">
+                <h2>Счета:</h2>
+                <hr>
+                <div style="display: flex;">
+                    <div class="check">
+                        <p style="font-weight: 600;">Счет №1: {{ account_number }}</p>
+                        <p style="font-weight: 600;">{{ balance }}₸</p>
+                    </div>
+                </div>
+            </div>
+
         </main>
         <footer style="margin-bottom: 0;">
             <div style="display: flex;margin-top: 10px;">

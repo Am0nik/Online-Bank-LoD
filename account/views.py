@@ -43,6 +43,8 @@ def profile_view(request):
         'account_number': user.account_number,
         'balance': user.balance,
         'account_type': user.account_type,
+        'profile_picture': user.profile_picture,
+        'code': user.code,
     }
 
     return render(request, 'profile.html', context)

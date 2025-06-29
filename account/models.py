@@ -59,7 +59,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.account_number:
             self.account_number = generate_account_number()
         if not self.code:
-            self.code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+            self.code = ''.join([str(random.randint(0, 9)) for _ in range(3)])
 
 
         super().save(*args, **kwargs)
