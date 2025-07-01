@@ -45,14 +45,48 @@
                 </div>
             </div>
             <hr style="margin: 20px;">
-            <div style="display: block;width: 95%;margin-left: auto;margin-right: auto;padding: 20px;background-color: rgb(236, 236, 236);border-radius: 20px;">
+            <div style="display: block;width: 95%;margin-left: auto;margin-right: auto;padding: 20px;
+            background-color: rgb(236, 236, 236);border-radius: 20px;margin-bottom: 50px;">
                 <h2>Счета:</h2>
                 <hr>
                 <div style="display: flex;">
                     <div class="check">
-                        <p style="font-weight: 600;">Счет №1: {{ account_number }}</p>
-                        <p style="font-weight: 600;">{{ balance }}₸</p>
+                        <h2>Основной счёт</h2>
+                            <p>Номер: {{ account_number }}</p>
+                            <p>Баланс: {{ balance }}₸</p>
+                            <p>Код CVV2: {{ code }}</p>
                     </div>
+                    {% if checks %}
+                        {% for check in checks %}
+                            <div style="margin-left: 10px;" class="check">
+                                <h3>Счёт: {{ check.account_number }}</h3> 
+                                <p><strong>Баланс:</strong> {{ check.balance }} ₸</p>
+                                <p><strong>Код CVV2:</strong> {{ check.code }}</p>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>Нет дополнительных счетов.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: block;width: 95%;margin-left: auto;margin-right: auto;padding: 20px;background-color: rgb(236, 236, 236);border-radius: 20px;">
+                <h2>Возможности</h2>
+                <hr>
+                <div style="display: flex;color: #005f73;">
+                    <a href="{% url 'transfers' %}" style="text-decoration: none;color: #005f73;font-weight: 600;display: flex;">
+                        <div class="check" style="display: block;text-decoration: none;" >
+                            <p>Переводы</p>
+                            <img src="{% static 'media/transfer.png' %}" alt="Переводы" style="width: 100px;height: auto;">
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;color: #005f73;font-weight: 600;display: flex;margin-left: 20px;">
+                        <div class="check" style="display: block;text-decoration: none;">
+                            <p>Платежи</p>
+                            <img src="{% static 'media/payment.png' %}" alt="Платежи" style="width: 100px;height: auto;">
+                        </div>
+                    </a>
                 </div>
             </div>
 

@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Банк LoD - {{ name }}</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body style="background-color: rgb(250, 250, 250);">
+        <header class="header-profile">
+            <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="50" height="50">
+            <a href="{% url 'home' %}" style="font-size: 1.5em;">LoD</a>
+            <div class="header-profile-more">
+                <a href="{% url 'logout' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;">Выйти</a>
+            </div>
+        </header>
+        <main style="margin-bottom: 200px">
+            <h2 style="text-align: center;margin-top: 50px;">Выберите способ перевода, посмотреть историю переводов можно во вкладке "Переводы"</h2>
+            <div style="margin-top: 70px;">
+                <div>
+                    <table style="width: 50%; border-collapse: collapse;margin-left: auto;margin-right: auto;background-color: rgb(237, 237, 237);border-radius: 30px;padding: 30px;">
+                        <tr style="border-radius: 30px;color: rgb(0, 54, 75);background-color: rgb(223, 223, 223);border-radius: 30px;">
+                            <td style="width: 50%; padding: 10px; text-align: center;">
+                                <a href="{% url 'transfers' %}" style="font-size: 1.5em;font-weight: 600;
+                                text-decoration: none;color: rgb(64, 93, 105);">Переводы</a>
+                            </td>
+                            <td style="width: 50%; padding: 10px; text-align: center;">
+                                <a href="{% url 'transfers_history' %}" style="font-size: 1.5em;
+                                font-weight: 600;text-decoration: none;color: rgb(64, 94, 106);">История</a>
+                            </td>
+                        </tr>
+                        <tr style="border-radius: 30px;">
+                            <td style="padding:15px;font-weight: 600;">
+                                <a href="#" style="text-decoration: none;color:rgb(32, 0, 80)" onclick="openModal()">Перевод по номеру телефона</a>
+                            </td>
+                        </tr>
+                        <tr style="border-radius: 30px;">
+                            <td style="padding: 15px;font-weight: 600;text-decoration: none;">
+                                <a href="#" style="text-decoration: none;color:rgb(32, 0, 80)">Перевод по номеру счета</a>
+                            </td>
+                        </tr>
+                    </table>   
+                </div>
+            </div>
+            <div id="myModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+                background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+                <div style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
+                    <h2>Перевод по номеру телефона</h2>
+                    <form method="post" action="{% url 'transfer_by_phone' %}">
+                        {% csrf_token %}
+
+                        <label for="sender_check_id">Выберите счёт:</label><br>
+                        <select name="sender_check_id" required style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px;">
+                            <option value="main">Основной счёт: {{ user.balance }} ₸</option>
+                            {% for check in cheks %}
+                                <option value="{{ check.id }}">Счёт {{ check.account_number }}: {{ check.balance }} ₸</option>
+                            {% endfor %}
+                        </select><br>
+                        
+                        <br style="user-select: none;">
+
+                        <label for="phone">Номер телефона получателя:</label><br>
+                        <input type="text" name="phone" required style="width: 70%; padding: 10px; margin-top: 10px; border-radius: 5px;"><br>
+                    
+                        <label for="amount">Сумма:</label><br>
+                        <input type="number" name="amount" required step="0.01" style="width: 70%; padding: 10px; margin-top: 10px; border-radius: 5px;"><br>
+
+                        <label for="description">Комментарий:</label><br>
+                        <textarea name="description" rows="4" style="width: 80%; padding: 10px; margin-top: 10px; border-radius: 5px;resize: none;"></textarea><br>
+                    
+                        <button type="submit" style="margin-top: 20px; padding: 10px 20px; background-color: rgb(64, 94, 106); color: white; border: none; border-radius: 5px;cursor: pointer;">Перевести</button>
+                    </form>
+
+                    {% if messages %}
+                        <div style="margin-bottom: 15px;">
+                          {% for message in messages %}
+                            <div style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+                              {{ message }}
+                            </div>
+                          {% endfor %}
+                        </div>
+                    {% endif %}
+                    <br style="user-select: none;">
+                    <button onclick="closeModal()" style="width: 30%;background-color: rgba(240, 248, 255, 0);border-radius:20px;border: 2px rgb(0, 0, 0);
+                    padding: 5px;">Закрыть</button>
+                </div>
+            </div>
+        </main>
+        <footer style="margin-bottom: 0;">
+            <div style="display: flex;margin-top: 10px;">
+                <div style="display: block;text-align: left;margin-left: 20px;">
+                    <p><b>Номер телефона:</b> +1 (234) 567-890</a><br>
+                    <p><b>Электронная почта:</b> lod_bank@gmail.com</p>
+                    <p><b>Адрес:</b> США, штат Иллинойс, город Уиннетка, Линкльн авеню 671</p>
+                </div>
+                <div style="display: block;margin-left: auto;margin-right: 20px;margin-top: auto;">
+                    <a href="https://www.instagram.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.facebook.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.twitter.com/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Qou1wYrqJT04IXk2H3pjT2yYBIMBZ5t8sQ&s" style="width: 30px;height: auto;border-radius: 5px;"></a>
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><b>©2025 Банк LoD</b></p>
+        </footer>
+        <script src="{% static 'script.js' %}"></script>
+        <script>
+            function adjustMainPadding() {
+              const header = document.querySelector('header');
+              const main = document.querySelector('main');
+              const height = header.offsetHeight;
+              main.style.paddingTop = height + 'px';
+            }
+        
+            window.addEventListener('load', adjustMainPadding);
+            window.addEventListener('resize', adjustMainPadding);
+        </script>
+    </body>
+</html>

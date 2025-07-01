@@ -270,4 +270,18 @@ header {
     color: #003540;
     font-size: 1.2em;
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.check a {
+    text-decoration: none;
+    color: #005f73;
+    font-weight: 600;
+}
+
+.check:hover {
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #005f73;
+    transform: scale(1.03);
 }

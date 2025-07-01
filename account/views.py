@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from .forms import CustomUserCreationForm, AuthenticationForm
 from .models import CustomUser
 from django.contrib.auth.decorators import login_required
+from transfers.models import Check
 
 def login_view(request):
     if request.method == 'POST':
@@ -34,6 +35,7 @@ def register_view(request):
 @login_required
 def profile_view(request):
     user = request.user  # текущий вошедший пользователь
+    checks = Check.objects.filter(user=user)  # получение счетов пользователя
 
     context = {
         'name': user.user,
@@ -45,6 +47,7 @@ def profile_view(request):
         'account_type': user.account_type,
         'profile_picture': user.profile_picture,
         'code': user.code,
+        'checks': checks,
     }
 
     return render(request, 'profile.html', context)
