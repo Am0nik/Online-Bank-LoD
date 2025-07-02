@@ -9,8 +9,9 @@
     </head>
     <body style="background-color: rgb(250, 250, 250);">
         <header class="header-profile">
-            <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="50" height="50">
+            <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="50" height="50" style="margin-top: auto;margin-bottom: auto;">
             <a href="{% url 'home' %}" style="font-size: 1.5em;">LoD</a>
+            <a href="{% url 'profile' %}" style=""><img src="{% static 'media/left-arrow.png' %}" width="50px" height="auto" style="margin-top: 50%;"></a>
             <div class="header-profile-more">
                 <a href="{% url 'logout' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;">Выйти</a>
             </div>
@@ -26,8 +27,8 @@
                                 text-decoration: none;color: rgb(64, 93, 105);">Переводы</a>
                             </td>
                             <td style="width: 50%; padding: 10px; text-align: center;">
-                                <a href="{% url 'transfers_history' %}" style="font-size: 1.5em;
-                                font-weight: 600;text-decoration: none;color: rgb(64, 94, 106);">История</a>
+                                <a href="#" style="font-size: 1.5em;
+                                font-weight: 600;text-decoration: none;color: rgb(64, 94, 106);" onclick="openModalH()">История</a>
                             </td>
                         </tr>
                         <tr style="border-radius: 30px;">
@@ -37,23 +38,24 @@
                         </tr>
                         <tr style="border-radius: 30px;">
                             <td style="padding: 15px;font-weight: 600;text-decoration: none;">
-                                <a href="#" style="text-decoration: none;color:rgb(32, 0, 80)">Перевод по номеру счета</a>
+                                <a href="#" style="text-decoration: none;color:rgb(32, 0, 80)" onclick="openModalA()">Перевод по номеру счета</a>
                             </td>
                         </tr>
                     </table>   
                 </div>
             </div>
+            <!--Перевод по номеру телефона-->
             <div id="myModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
                 background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
                 <div style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
                     <h2>Перевод по номеру телефона</h2>
-                    <form method="post" action="{% url 'transfer_by_phone' %}">
+                    <form method="post" action="#">
                         {% csrf_token %}
 
                         <label for="sender_check_id">Выберите счёт:</label><br>
                         <select name="sender_check_id" required style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px;">
                             <option value="main">Основной счёт: {{ user.balance }} ₸</option>
-                            {% for check in cheks %}
+                            {% for check in checks %}
                                 <option value="{{ check.id }}">Счёт {{ check.account_number }}: {{ check.balance }} ₸</option>
                             {% endfor %}
                         </select><br>
@@ -86,6 +88,78 @@
                     padding: 5px;">Закрыть</button>
                 </div>
             </div>
+            <!--Перевод по номеру счета-->
+            <div id="myModalA" style="display:none; position:fixed; top:0; left:0; width:100%;height: 100%;
+                background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+                <div style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
+                    <h2>Перевод по номеру счета</h2>
+                    <form method="post" action="{% url 'transfer_by_account' %}">
+                        {% csrf_token %}
+
+                        <label for="sender_check_id">Выберите счёт:</label><br>
+                        <select name="sender_check_id" required style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px;">
+                            <option value="main">Основной счёт: {{ user.balance }} ₸</option>
+                            {% for check in checks %}
+                                <option value="{{ check.id }}">Счёт {{ check.account_number }}: {{ check.balance }} ₸</option>
+                            {% endfor %}
+                        </select><br>
+                        
+                        <br style="user-select: none;">
+
+                        <label for="phone">Номер счета получателя:</label><br>
+                        <input type="text" name="account_number" required style="width: 70%; padding: 10px; margin-top: 10px; border-radius: 5px;"><br>
+                        <!--{% for transfer in transfers %}   
+                            {% if recipient.user %}
+                                <p style="color: green; font-weight: bold;">Получатель: {{ recipient.user }} {{ recipient.surname }}</p>
+                            {% else %}
+                                <p style="color: red; font-weight: bold;">Получатель не найден</p>
+                            {% endif %}
+                        {% endfor %}-->
+                        <label for="amount">Сумма:</label><br>
+                        <input type="number" name="amount" required step="0.01" style="width: 70%; padding: 10px; margin-top: 10px; border-radius: 5px;"><br>
+
+                        <label for="description">Комментарий:</label><br>
+                        <textarea name="description" rows="4" style="width: 80%; padding: 10px; margin-top: 10px; border-radius: 5px;resize: none;"></textarea><br>
+                    
+                        <button type="submit" style="margin-top: 20px; padding: 10px 20px; background-color: rgb(64, 94, 106); color: white; border: none; border-radius: 5px;cursor: pointer;">Перевести</button>
+                    </form>
+
+                    {% if messages %}
+                        <div style="margin-bottom: 15px;">
+                          {% for message in messages %}
+                            <div style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+                              {{ message }}
+                            </div>
+                          {% endfor %}
+                        </div>
+                    {% endif %}
+                    <br style="user-select: none;">
+                    <button onclick="closeModalA()" style="width: 30%;background-color: rgba(240, 248, 255, 0);border-radius:20px;border: 2px rgb(0, 0, 0);
+                    padding: 5px;">Закрыть</button>
+                </div>
+            </div>
+            <!--История переводов-->
+            <div id="myModalH" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+                background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+                <div style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;height: 80%;overflow-y: auto;">
+                    <h2>История переводов</h2>
+                    {% for transfer in transfers %}
+                        <div style="margin-bottom: 15px; text-align: left;">
+                            <p><strong>Отправитель:</strong> {{ transfer.sender.account_number }}</p>
+                            <p><strong>Получатель:</strong> {{ transfer.recipient_user.user }} {{ transfer.recipient_user.surname }}</p>
+                            <p><strong>Сумма:</strong> {{ transfer.amount }} ₸</p>
+                            <p><strong>Комментарий:</strong> {{ transfer.description }}</p>
+                            <p><strong>Дата и время:</strong> {{ transfer.timestamp }}</p>
+                            <hr style="margin-top: 10px;">
+                        </div>
+                    {% empty %}
+                        <p>Нет переводов.</p>
+                    {% endfor %}
+                    <br style="user-select: none;">
+                    <button onclick="closeModalH()" style="width: 10%;background-color: rgba(122, 202, 255, 0.558);border-radius:20px;border: 2px rgb(0, 0, 0);
+                    padding: 5px;z-index: 10;cursor: pointer;position:fixed;top: 85%;left:45%">Закрыть</button>
+                </div>
+            </div>
         </main>
         <footer style="margin-bottom: 0;">
             <div style="display: flex;margin-top: 10px;">
@@ -102,7 +176,6 @@
             </div>
             <p style="margin-top: 20px;"><b>©2025 Банк LoD</b></p>
         </footer>
-        <script src="{% static 'script.js' %}"></script>
         <script>
             function adjustMainPadding() {
               const header = document.querySelector('header');
@@ -113,6 +186,22 @@
         
             window.addEventListener('load', adjustMainPadding);
             window.addEventListener('resize', adjustMainPadding);
+
+            function openModalA() {
+                document.getElementById('myModalA').style.display = 'flex';
+            }
+            function closeModalA() {
+                    document.getElementById('myModalA').style.display = 'none';
+                }
+
+            function openModalH() {
+                document.getElementById('myModalH').style.display = 'flex';
+            }
+            function closeModalH() {
+                    document.getElementById('myModalH').style.display = 'none';
+                }
+            
         </script>
     </body>
+    <script src="{% static 'script.js' %}"></script>
 </html>
