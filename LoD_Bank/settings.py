@@ -39,10 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'account',
-    'admin_panel',
-    'notifications',
     'payments',
-    'support',
     'transfers',
 ]
 

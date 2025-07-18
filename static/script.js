@@ -1,7 +1,10 @@
-function openModal() {
-        document.getElementById('myModal').style.display = 'flex';
-    }
-    function closeModal() {
-        document.getElementById('myModal').style.display = 'none';
-    };
 
+
+function adjustMainPadding() {
+      const header = document.querySelector('header');
+      const main = document.querySelector('main');
+      const height = header.offsetHeight;
+      main.style.paddingTop = height + 'px';
+    }
+window.addEventListener('load', adjustMainPadding);
+window.addEventListener('resize', adjustMainPadding);

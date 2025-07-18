@@ -10,7 +10,6 @@
     <body style="background-color: rgb(250, 250, 250);">
         <header class="header-profile">
             <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="50" height="50" style="margin-top: auto;margin-bottom: auto;">
-            <a href="{% url 'home' %}" style="font-size: 1.5em;">LoD</a>
             <a href="{% url 'profile' %}" style=""><img src="{% static 'media/left-arrow.png' %}" width="50px" height="auto" style="margin-top: 50%;"></a>
             <div class="header-profile-more">
                 <a href="{% url 'logout' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;">Выйти</a>
@@ -28,7 +27,7 @@
                             </td>
                             <td style="width: 50%; padding: 10px; text-align: center;">
                                 <a href="#" style="font-size: 1.5em;
-                                font-weight: 600;text-decoration: none;color: rgb(64, 94, 106);" onclick="openModalH()">История</a>
+                                font-weight: 600;color: rgb(64, 94, 106);" onclick="openModalH()">История</a>
                             </td>
                         </tr>
                         <tr style="border-radius: 30px;">

@@ -52,6 +52,20 @@ def profile_view(request):
 
     return render(request, 'profile.html', context)
 
+@login_required
+def settings_view(request):
+    user = request.user
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            return redirect('profile')
+    else:
+        form = CustomUserCreationForm(instance=user)
+    
+    return render(request, 'settings.html', {'form': form, 'name': user.user})
 
 @login_required
 def logout_view(request):

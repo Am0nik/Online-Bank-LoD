@@ -11,6 +11,7 @@
     padding: 0;
 }
 
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #fafafa;
@@ -27,6 +28,10 @@ footer{
     text-align: center;
     padding: 10px 0;
     font-size: 0.9em;
+}
+
+section {
+    margin-bottom: 30px;
 }
 
 /*****header*****/

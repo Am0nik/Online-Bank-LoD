@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Банк LoD</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <style>
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            border-radius: 20px;
+        }
+        h1, h2 {
+            color: #1e90ff;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #ffffff;
+        }
+    </style>
+    <body>
+        <header class="header-home">
+            <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="100" height="100">
+            <a href="{% url 'home' %}">LoD</a>
+            <div class="header-home-more">
+                <a href="{% url 'profile' %}">Аккаунт</a>
+                <a href="{% url 'info' %}">Инфо</a>
+            </div>
+        </header>
+        <main>
+            <section>
+                <h1>💼 О Банке LoD</h1>
+                <p><strong>LoD Bank</strong> — это современный цифровой банк, который предоставляет клиентам быстрые, безопасные и удобные финансовые услуги в любое время и в любом месте. Мы стремимся сделать управление финансами простым, прозрачным и доступным каждому.</p>
+            </section>
+
+            <section>
+                <h2>🧾 Наши услуги</h2>
+                <ul>
+                    <li>💳 Открытие и обслуживание счетов</li>
+                    <li>🔁 Мгновенные переводы между счетами</li>
+                    <li>📱 Удобное мобильное приложение и веб-интерфейс</li>
+                    <li>🧾 Электронные выписки и отчёты</li>
+                    <li>📷 Сканирование карт и чеков</li>
+                    <li>🛡️ Надёжная система защиты данных</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>🧑‍💻 Почему выбирают нас?</h2>
+                <ul>
+                    <li>⚡ Быстрое открытие счёта — за считанные минуты</li>
+                    <li>🔒 Безопасность — мы используем современные алгоритмы шифрования</li>
+                    <li>🕐 Круглосуточная поддержка — вы не останетесь без помощи</li>
+                    <li>🌍 Доступ из любой точки мира</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>📍 Контакты</h2>
+                <p><strong>Телефон:</strong> +7 (708) 777-7777</p>
+                <p><strong>Email:</strong> lod_bank@gmail.com</p>
+                <p><strong>Адрес:</strong> г. Уиннетка, штат Иллинойс, США, ул. Линкольн, 671</p>
+            </section>
+
+            <section>
+                <h2>🤝 Присоединяйтесь к LoD Bank</h2>
+                <p>Будьте частью будущего финансов — надёжного, цифрового и инновационного. Зарегистрируйтесь сегодня и управляйте своими средствами легко и безопасно.</p>
+            </section>
+        </main>
+        <footer>
+            <div style="display: flex;margin-top: 10px;">
+                <div style="display: block;text-align: left;margin-left: 20px;">
+                    <p><b>Номер телефона:</b> +1 (234) 567-890</a><br>
+                    <p><b>Электронная почта:</b> lod_bank@gmail.com</p>
+                    <p><b>Адрес:</b> США, штат Иллинойс, город Уиннетка, Линкльн авеню 671</p>
+                </div>
+                <div style="display: block;margin-left: auto;margin-right: 20px;margin-top: auto;">
+                    <a href="https://www.instagram.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.facebook.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" style="width: 30px;height: auto;border-radius: 5px;margin-right: 10px;"></a>
+                    <a href="https://www.twitter.com/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Qou1wYrqJT04IXk2H3pjT2yYBIMBZ5t8sQ&s" style="width: 30px;height: auto;border-radius: 5px;"></a>
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><b>©2025 Банк LoD</b></p>
+        </footer>
+
+        <script>
+            function adjustMainPadding() {
+              const header = document.querySelector('header');
+              const main = document.querySelector('main');
+              const height = header.offsetHeight;
+              main.style.paddingTop = height + 'px';
+            }
+        
+            window.addEventListener('load', adjustMainPadding);
+            window.addEventListener('resize', adjustMainPadding);
+          </script>
+    </body>
+</html>

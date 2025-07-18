@@ -12,7 +12,8 @@
             <img src="{% static 'media/logo.png' %}" alt="Логотип Банк LoD" class="logo" width="50" height="50">
             <a href="{% url 'home' %}" style="font-size: 1.5em;">LoD</a>
             <div class="header-profile-more">
-                <a href="{% url 'logout' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;">Выйти</a>
+                <a href="{% url 'settings' %}" ><img src="{% static 'media/setting.png' %}" width="40" height="auto"></a>
+                <a href="{% url 'logout' %}" style="color: rgb(108, 181, 223);font-size: 1em;font-weight: 700;margin-top: auto;margin-bottom: auto;">Выйти</a>
             </div>
         </header>
         <main>
@@ -44,7 +45,6 @@
                     </div>
                 </div>
             </div>
-            <hr style="margin: 20px;">
             <div style="display: block;width: 95%;margin-left: auto;margin-right: auto;padding: 20px;
             background-color: rgb(236, 236, 236);border-radius: 20px;margin-bottom: 50px;">
                 <h2>Счета:</h2>
@@ -81,7 +81,7 @@
                             <img src="{% static 'media/transfer.png' %}" alt="Переводы" style="width: 100px;height: auto;">
                         </div>
                     </a>
-                    <a href="#" style="text-decoration: none;color: #005f73;font-weight: 600;display: flex;margin-left: 20px;">
+                    <a href="{% url 'payment_view'%}" style="text-decoration: none;color: #005f73;font-weight: 600;display: flex;margin-left: 20px;">
                         <div class="check" style="display: block;text-decoration: none;">
                             <p>Платежи</p>
                             <img src="{% static 'media/payment.png' %}" alt="Платежи" style="width: 100px;height: auto;">
